@@ -1,13 +1,25 @@
 import React, { Component } from 'react'
+import {
+  FormGroup, Input, Switch, FormCheckLabel, FormCheck, Button
+} from '@smooth-ui/core-sc'
 import styled from 'styled-components'
 
-const Form = styled.form`
-  padding: 0 20px;
+const MyButton = styled(Button)`
+  margin-left: 10px;
 `
 
-const Label = styled.span`
-  font-size: 16px;
-  margin: 0 10px;
+const MySwitch = styled(Switch)`
+  margin-right: 10px;
+  input:checked + .sui-switch-wrapper {
+    background-color: #e6f2d9;
+  }
+  input:checked + .sui-switch-wrapper .sui-switch-ball {
+    background-color: #82bd41;
+  }
+`
+
+const MyFormContainer = styled.div`
+  margin-left: 20px;
 `
 
 export class FeatureForm extends Component {
@@ -58,30 +70,31 @@ export class FeatureForm extends Component {
   render() {
     const { features, newFeatureName } = this.state
     return (
-      <React.Fragment>
-        <Form onSubmit={this.onSubmit}>
-          <h2>Feature to add : </h2>
-          <input type="text" value={newFeatureName} onChange={this.changeNewFeatureName} />
-        </Form>
+      <MyFormContainer>
+        <FormGroup>
+          <form onSubmit={this.onSubmit}>
+            <h2>Feature to add : </h2>
+            <Input type="text" value={newFeatureName} onChange={this.changeNewFeatureName} />
+          </form>
+        </FormGroup>
 
-        <Form>
+        <form>
           <h2>Features available</h2>
           {Object.keys(features).map((name, index) => (
-            <div key={index}>
-              <label htmlFor={`${name}-field`}>
-                <input
-                  id={`${name}-field`}
-                  type="checkbox"
-                  checked={features[name]}
-                  onChange={this.onInputChange(features, name)}
-                />
-                <Label>{name}</Label>
-              </label>
-              <input type="button" value="delete" onClick={this.deleteAttr(name)} />
-            </div>
+            <FormCheck key={index} lineHeight={3}>
+              <MySwitch
+                id={`${name}-field`}
+                checked={features[name]}
+                onChange={this.onInputChange(features, name)}
+              />
+              <FormCheckLabel htmlFor={`${name}-field`}>{name}</FormCheckLabel>
+              <MyButton onClick={this.deleteAttr(name)} size="sm">
+                Delete
+              </MyButton>
+            </FormCheck>
           ))}
-        </Form>
-      </React.Fragment>
+        </form>
+      </MyFormContainer>
     )
   }
 }
