@@ -2,6 +2,22 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const fs = require('fs')
 
+// init
+const featuresOn = process.env.FEATURES_ON ? process.env.FEATURES_ON : ''
+const featuresOff = process.env.FEATURES_OFF ? process.env.FEATURES_OFF : ''
+let initFeatures = {}
+
+if (featuresOn) {
+  const featsOn = featuresOn.split(';')
+  initFeatures = featsOn.reduce((feats, value) => ({ ...feats, [value]: true }), initFeatures)
+}
+if (featuresOff) {
+  const featsOff = featuresOff.split(';')
+  initFeatures = featsOff.reduce((feats, value) => ({ ...feats, [value]: false }), initFeatures)
+}
+
+fs.writeFileSync('./features.json', JSON.stringify(initFeatures))
+
 function getData() {
   let rawData = {}
   try {
