@@ -10,6 +10,9 @@ const MyButton = styled(Button)`
 
 const MySwitch = styled(Switch)`
   margin-right: 10px;
+  input {
+    cursor: pointer !important;
+  }
   input:checked + .sui-switch-wrapper {
     background-color: #e6f2d9;
   }
@@ -55,7 +58,10 @@ export class FeatureForm extends Component {
       .then(newFeats => this.setState({ features: newFeats }))
   }
 
-  deleteAttr = name => () => {
+  deleteAttr = name => (event) => {
+    if (name === '') {
+      alert('the name should not be empty')
+    }
     const headers = new Headers({
       'Content-Type': 'application/json'
     })
@@ -65,6 +71,7 @@ export class FeatureForm extends Component {
     })
       .then(res => res.json())
       .then(newFeats => this.setState({ features: newFeats }))
+    event.preventDefault()
   }
 
   render() {
@@ -80,8 +87,8 @@ export class FeatureForm extends Component {
 
         <form>
           <h2>Features available</h2>
-          {Object.keys(features).map((name, index) => (
-            <FormCheck key={index} lineHeight={3}>
+          {Object.keys(features).map(name => (
+            <FormCheck key={name} lineHeight={3}>
               <MySwitch
                 id={`${name}-field`}
                 checked={features[name]}
