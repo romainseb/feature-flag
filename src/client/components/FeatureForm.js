@@ -40,8 +40,13 @@ export class FeatureForm extends Component {
 
   onSubmit = (event) => {
     const { features, newFeatureName } = this.state
-    this.onInputChange(features, newFeatureName)()
-    this.setState({ newFeatureName: '' })
+    if (Object.prototype.hasOwnProperty.call(features, newFeatureName)) {
+      alert('Feature already present')
+    } else {
+      this.onInputChange(features, newFeatureName)()
+      this.setState({ newFeatureName: '' })
+    }
+
     event.preventDefault()
   }
 
@@ -87,19 +92,21 @@ export class FeatureForm extends Component {
 
         <form>
           <h2>Features available</h2>
-          {Object.keys(features).map(name => (
-            <FormCheck key={name} lineHeight={3}>
-              <MySwitch
-                id={`${name}-field`}
-                checked={features[name]}
-                onChange={this.onInputChange(features, name)}
-              />
-              <FormCheckLabel htmlFor={`${name}-field`}>{name}</FormCheckLabel>
-              <MyButton onClick={this.deleteAttr(name)} size="sm">
-                Delete
-              </MyButton>
-            </FormCheck>
-          ))}
+          {Object.keys(features)
+            .sort()
+            .map(name => (
+              <FormCheck key={name} lineHeight={3}>
+                <MySwitch
+                  id={`${name}-field`}
+                  checked={features[name]}
+                  onChange={this.onInputChange(features, name)}
+                />
+                <FormCheckLabel htmlFor={`${name}-field`}>{name}</FormCheckLabel>
+                <MyButton onClick={this.deleteAttr(name)} size="sm">
+                  Delete
+                </MyButton>
+              </FormCheck>
+            ))}
         </form>
       </MyFormContainer>
     )

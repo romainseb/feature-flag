@@ -4,6 +4,11 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const outputDirectory = 'dist'
 
+const proxy = undefined
+// const proxy = {
+//   '/api': 'http://localhost:18080'
+// }
+
 module.exports = {
   entry: './src/client/index.js',
   output: {
@@ -32,9 +37,9 @@ module.exports = {
   devServer: {
     port: 18081,
     host: '0.0.0.0',
-    proxy: {
-      '/api': 'http://localhost:18080'
-    }
+    disableHostCheck: true,
+    publicPath: '/features/',
+    proxy
   },
   plugins: [
     new CleanWebpackPlugin([outputDirectory]),
