@@ -5,6 +5,7 @@
   "main": "tools/lib/index.js",
   "mainSrc": "tools/src/index.js",
   "scripts": {
+    "prepublish": "npm run build && npm run test",
     "test": "jest",
     "build-tools": "rimraf lib && babel -d lib ./src/tools && rimraf lib/**/*.test.js",
     "build": "webpack --mode production",
