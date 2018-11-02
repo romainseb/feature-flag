@@ -3,7 +3,8 @@
   "extends": ["airbnb"],
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "jasmine": true
   },
   "rules": {
     "import/prefer-default-export": "off",
@@ -11,6 +12,10 @@
     "no-console": "off",
     "comma-dangle": "off",
     "semi": ["error", "never"],
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": "off",
+    "import/no-named-as-default": "off"
+  },
+  "globals": {
+    "jest": true
   }
 }
